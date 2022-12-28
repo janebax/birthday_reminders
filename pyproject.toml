@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "sns-test"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+boto3 = "^1.26.27"
+pytest = "^7.2.0"
+pandas = "^1.5.2"
+datetime = "^4.8"
+black = "^22.12.0"
+isort = "^5.11.3"
+loguru = "^0.6.0"
+pylint = "^2.15.9"
+freezegun = "^1.2.2"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest-cov = "^4.0.0"
+patch = "^1.16"
+
+[build-system]
+requires = ["poetry>=1.2.2"]
+build-backend = "poetry.masonry.api"
