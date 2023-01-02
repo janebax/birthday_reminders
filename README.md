@@ -1,5 +1,9 @@
 Typically people use a social media website such as Facebook to remember their friend's birthdays... however this repo can be used as alternative! Given a set of names and their birthdays, this gives AWS a set of instructions to give you a text reminder the day before and the month before someone's birthday. 
 
+The architecture used in AWS is shown below. Lambda is used to run the code using an image stored in ECR. It is scheduled to run daily by EventBridge.
+
+![Architecture](./docs/birthday_reminder.png)
+
 ## Prerequisites
 
 To use the following repo you will need to do the following:
