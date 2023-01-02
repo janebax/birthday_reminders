@@ -16,6 +16,7 @@ isort = "^5.11.3"
 loguru = "^0.6.0"
 pylint = "^2.15.9"
 freezegun = "^1.2.2"
+diagrams = "^0.23.1"
 
 
 [tool.poetry.group.dev.dependencies]
