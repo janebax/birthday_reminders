@@ -1,23 +1,27 @@
 """Script that runs every day as scheduled by a Lambda and triggers a message"""
+import boto3
 import pandas as pd
 from contacts import contacts
 from loguru import logger
 from utils import (
     build_birthday_df,
-    initialise_sns_and_get_birthday_arn,
+    get_birthday_arn,
     match_string_for_message,
     send_message_by_sns,
 )
 
 
-def send_message():
+def send_message(region_name="eu-west-1"):
     """Sends a message to an SNS topic if a birthday occurs on the next day or the same day next
-    month"""
+    month
+
+    Args:
+        region_name (string): Default value of "eu-west-1"
+    """
     current_date = pd.Timestamp.today()
 
-    print("helloo")
-
-    sns_client, birthday_arn = initialise_sns_and_get_birthday_arn()
+    sns_client = boto3.client("sns", region_name)
+    birthday_arn = get_birthday_arn(sns_client)
 
     # Get list of birthdays and create columns with date a day before and a month before
     birthday_df = build_birthday_df(contacts)

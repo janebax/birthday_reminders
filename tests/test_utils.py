@@ -1,17 +1,48 @@
 from datetime import date, datetime
-
+import re
 import pandas as pd
 import pytest
+from moto import mock_sns
+import boto3
 from freezegun import freeze_time
 from pandas import Timestamp
 from pandas.testing import assert_frame_equal
 
 from app.utils import (
+    get_birthday_arn,
+    send_message_by_sns,
     build_birthday_df,
     get_next_birthday,
     match_string_for_message,
     previous_month,
 )
+
+
+@mock_sns
+def test_get_birthday_arn_success():
+    sns = boto3.client("sns", region_name="eu-west-1")
+    sns.create_topic(Name="birthdays_v1")
+    birthday_arn = get_birthday_arn(sns)
+    re_pattern = r"arn:aws:sns:eu-west-1:[0-9]*:birthdays_v1"
+    assert re.search(re_pattern, birthday_arn) is not None
+
+
+@mock_sns
+def test_get_birthday_arn_fail():
+    sns = boto3.client("sns", region_name="eu-west-1")
+    sns.create_topic(Name="nada")
+    with pytest.raises(
+        Exception, match='No Topic exists with the string "birthdays" in it'
+    ):
+        get_birthday_arn(sns)
+
+
+@mock_sns
+def test_send_message_by_sns():
+    sns = boto3.client("sns", region_name="eu-west-1")
+    response = sns.create_topic(Name="birthdays_v1")
+    topicarn = response["TopicArn"]
+    send_message_by_sns(sns, topicarn, "hello")
 
 
 class TestMatchStringForMessage:

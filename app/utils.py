@@ -6,20 +6,21 @@ import boto3
 import pandas as pd
 
 
-def initialise_sns_and_get_birthday_arn():
-    """
-    Connect to AWS SNS service and identify the previously created 'birthday' Topic.
-    """
-    # Connect to SNS messaging service
-    sns_client = boto3.client("sns", region_name="{REGION}")
+def get_birthday_arn(sns_client: boto3.client):
+    """Gets the first SNS topic with 'birthdays' in the name and returns it
 
-    # Get the Arn for the birthfay topic
+    Args:
+        sns_client (boto3.client): client to handle requests for SNS
+
+    Returns:
+        string: TopicArn containing "birthdays" if it exists
+    """
     topics = sns_client.list_topics()["Topics"]
     for topic in topics:
         if "birthdays" in topic["TopicArn"]:
-            birthday_arn = topic["TopicArn"]
-
-    return sns_client, birthday_arn
+            print("yes")
+            return topic["TopicArn"]
+    raise Exception('No Topic exists with the string "birthdays" in it')
 
 
 def send_message_by_sns(sns_client: boto3.client, arn: str, message: str):
