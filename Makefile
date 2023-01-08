@@ -29,8 +29,8 @@ create_ecr:
 	@aws ecr create-repository --repository-name birthday_reminders --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE
 
 push_to_ecr:
-	@docker tag ${IMAGE_ID} ${ACCOUNT_NUMBER}.dkr.ecr.${AWS_REGION}.amazonaws.com/birthday_reminders:v2
-	@docker push ${ACCOUNT_NUMBER}.dkr.ecr.${AWS_REGION}.amazonaws.com/birthday_reminders:v2
+	@docker tag ${IMAGE_ID} ${ACCOUNT_NUMBER}.dkr.ecr.${AWS_REGION}.amazonaws.com/birthday_reminders:v1
+	@docker push ${ACCOUNT_NUMBER}.dkr.ecr.${AWS_REGION}.amazonaws.com/birthday_reminders:v1
 
 create_lambda_function:
 	@aws lambda create-function --region ${AWS_REGION} --function-name birthday_reminders_v1  \
