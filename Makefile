@@ -20,9 +20,6 @@ up:
 down:
 	@docker image rm app
 
-get_image_id:
-	'IMAGE_ID=$(docker images -q app)' >> app/.env
-
 # AWS service commands
 ecr_login:
 	@aws ecr get-login-password --region ${AWS_REGION} | docker login \
