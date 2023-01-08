@@ -27,7 +27,7 @@ You will also need to update the birthday dates you want reminders for:
 Once these are updated follow the steps below:
 
 1) `make up` - this builds the Docker image
-2) `echo IMAGE_ID=$(docker images -q app) >> app/.env ` - adds the 'IMAGE ID' associated the the repository 'app' to the .env file that specifies environment variables for the Makefile
+2) `echo IMAGE_ID=$(docker images -q app) >> .env ` - adds the 'IMAGE ID' associated the the repository 'app' to the .env file that specifies environment variables for the Makefile
 3) `make ecr_login` followed by `make create_ecr` - creates the repository for the image in ECR
 4) `make push_to_ecr` - pushes the image built in Step 1 in ECR
 5) `create_lambda_function` - creates lambda function with Docker Image
