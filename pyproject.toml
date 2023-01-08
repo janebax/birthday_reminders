@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "sns-test"
+name = "birthday_reminders"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
@@ -16,13 +16,12 @@ isort = "^5.11.3"
 loguru = "^0.6.0"
 pylint = "^2.15.9"
 freezegun = "^1.2.2"
-diagrams = "^0.23.1"
-moto = "^4.0.13"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest-cov = "^4.0.0"
 patch = "^1.16"
+moto = "^4.0.13"
 
 [build-system]
 requires = ["poetry>=1.2.2"]

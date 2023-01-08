@@ -16,20 +16,20 @@ To use the following repo you will need to do the following:
 
 ## To use
 
-To use the repo you will need to update the following:
-
+To use the repo you will need to update the following in the .env file. This is loaded into the Makefile:
 - *{ACCOUNT_NUMBER}* - your AWS account number
-- *{REGION}* - the AWS region you want to use for resources
-- *{contacts.py}* - the names and birthdays you want reminders for
+- *{AWS_REGION}* - the AWS region you want to use for resources
 - *{IAM_ROLE_ARN}* - the ARN for the IAM Role created 
+
+You will also need to update the birthday dates you want reminders for:
+- *{contacts.py}* - the names and birthdays you want reminders for
 
 Once these are updated follow the steps below:
 
 1) `make up` - this builds the Docker image
-2) `make get_image_id` - identify the 'IMAGE ID' associated the the repository 'app'
-3) `make ecr_login`, `make create_ecr` - creates the repository for the image in ECR
-4) Update the `push_to_ecr` command in the make file with the IMAGE ID identified in Step 2
-5) `make push_to_ecr` - pushes the image built in Step 1 in ECR
-6) `create_lambda_function` - creates lambda function with Docker Image
-7) `create_daily_rule` - creates rule in EventBridge to schedule the lambda function
-8)  Manually add the EventBridge trigger to the Lambda in the AWS Console to run the code once a day at noon
+2) `echo IMAGE_ID=$(docker images -q app) >> app/.env ` - adds the 'IMAGE ID' associated the the repository 'app' to the .env file that specifies environment variables for the Makefile
+3) `make ecr_login` followed by `make create_ecr` - creates the repository for the image in ECR
+4) `make push_to_ecr` - pushes the image built in Step 1 in ECR
+5) `create_lambda_function` - creates lambda function with Docker Image
+6) `create_daily_rule` - creates rule in EventBridge to schedule the lambda function
+7)  Manually add the EventBridge trigger to the Lambda in the AWS Console to run the code once a day at noon
